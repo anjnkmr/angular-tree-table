@@ -200,13 +200,13 @@ tableConfig = {
 **DEMO:**
 -----
 
-AngularTreeTableSample
+AngularTreeTable Sample
 ----------------------
-https://anjnkmr.github.io/angular-tree-table-sample
+https://anjnkmr.github.io/angular-tree-table
 
 CODE:
 -----
-https://github.com/anjnkmr/angular-tree-table-sample
+https://github.com/anjnkmr/angular-tree-table
 
 **Medium Link**
 ----------------------
