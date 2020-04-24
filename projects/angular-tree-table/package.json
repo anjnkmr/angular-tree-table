@@ -1,0 +1,33 @@
+{
+  "name": "angular-tree-table",
+  "description": "Angular Tree Table",
+  "version": "0.0.43",
+  "author": "Anjan Kumar <kumar.rakuditi@gmail.com> (http://anjnkmr.github.io)",
+  "keywords": [
+    "Angular Table",
+    "Angular Tree Table",
+    "Tree Table",
+    "Angular Grid Expandanble",
+    "Angular Table Expandable"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anjnkmr/angular-tree-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anjnkmr/angular-tree-table/issues"
+  },
+  "homepage": "https://anjnkmr.github.io/angular-tree-table-sample",
+  "peerDependencies": {
+    "@angular/common": "^8.2.0",
+    "@angular/core": "^8.2.0",
+    "@angular/forms": "^8.2.0",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "moment": "^2.24.0",
+    "file-saver": "^2.0.2",
+    "xlsx": "^0.15.1"
+  }
+}

@@ -1,0 +1,178 @@
+<div class="tree-table">
+  <div class="tree-table-loading" [ngClass]="tableData.isLoading ? 'on' : 'off'">
+    <div class="loader-msg">
+      Loading...
+    </div>
+  </div>
+  <div class="action-container">
+    <div class="search-section" *ngIf="tableData.config.showPageLengthDropdown || tableData.config.commonSearch || tableData.config.excelExportButton">
+      <div class="first-part" *ngIf="tableData.config.showPageLengthDropdown">
+        Show <select class="select-page-size form-control form-control-sm" [(ngModel)]="tableData.pageSize"
+          (change)="pageSizeChanged()">
+          <option value="{{p}}" *ngFor="let p of tableData.config.pageSizes">{{p}}</option>
+        </select> Entries
+      </div>
+      <div class="second-part">
+        <input *ngIf="tableData.config.commonSearch" type="text"
+          class="form-control form-control-sm text-center col-3 float-right" [(ngModel)]="tableData.keyword"
+          (keyup)="search()" (change)="search()" placeholder="Search" />
+        <button *ngIf="tableData.config.excelExportButton"
+          class="btn btn-sm btn-primary export excelExportButton float-right" (click)="excelExportClicked()">{{tableData.config.excelExportButtonText}}</button>
+        <div class="dropdown dropleft" id="dropDownVisCon{{randomInstance}}">
+          <button id="dropDownVis{{randomInstance}}" *ngIf="tableData.config.columnVisibilityDropDown"
+            class="btn btn-sm btn-secondary dropDownBtn v-elipses float-right dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">⋮</button>
+            <div class="dropDownBtn-data dropdown-menu">
+              <button class="btnVis btn-sm btn" *ngFor="let header of currentPageData.headers"
+                [ngClass]="header.show ? 'active': ''" (click)=" header.show = !header.show;">{{header.title}}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons-section" *ngIf="tableData.config.columnVisibility">
+      <div class="column-visibility" *ngIf="tableData.config.columnVisibility">
+        <button class="btnVis" *ngFor="let header of currentPageData.headers" [ngClass]="header.show ? 'active': ''"
+          (click)="header.show = !header.show">{{header.title}}</button>
+      </div>
+    </div>
+    <div class="extraInfo-section" *ngIf="tableData.config.extraInfos.length > 0">
+      <div class="extraInfo" [style.width]="extraInfoItemWidthPercent + '%'" *ngFor="let exInfo of tableData.config.extraInfos">
+        {{exInfo[0]}}: {{exInfo[1]}}
+      </div>
+    </div>
+  </div>
+  <table [class]="className + ' ' + tableData.config.customClassName + ' ' + tableData.config.fullClassName">
+    <thead class="ds2-table-element--head-row thead-sm" *ngIf="tableData.config.showTableHeaders">
+      <tr>
+        <th *ngIf="!tableData.config.showExpandAllArrows" [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'"></th>
+        <th *ngIf="tableData.config.showExpandAllArrows" [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'">
+          <button class="btn btn-secondary btn-sm collapsed-row-button" (click)="expandAllRows()" 
+                      *ngIf="!tableData.isAllRowsExpanded"></button>
+              <button class="btn btn-secondary btn-sm expanded-row-button" (click)="collapseAllRows()" 
+                      *ngIf="tableData.isAllRowsExpanded"></button>
+        </th>
+        <ng-container *ngFor="let header of currentPageData.headers">
+          <th *ngIf="header.show && header.dataType !== 'SELECT'" [ngClass]="header.style" (click)="sortColumn(header)">{{header.title}}
+            <i [ngClass]="tableData.config.sortAscClassName+' sort-right-align'" *ngIf="tableData.config.sortedColumn[header.dataProperty] === 'ASC'"></i>
+            <i [ngClass]="tableData.config.sortDescClassName+' sort-right-align'" *ngIf="tableData.config.sortedColumn[header.dataProperty] === 'DESC'"></i>
+            <i [ngClass]="tableData.config.sortNothingClassName+' sort-right-align'" *ngIf="tableData.config.sortedColumn[header.dataProperty] !== 'DESC' && tableData.config.sortedColumn[header.dataProperty] !== 'ASC'"></i>
+          </th>
+          <th *ngIf="header.show && header.dataType === 'SELECT'" [ngClass]="header.style" (click)="toggleSelectAllRows(header)">
+            <input type="checkbox" class="header-check-box select-all" [checked]="isAllRowsSelected(header) ? 'checked' : ''"/> {{header.title}}
+          </th>
+        </ng-container>
+      </tr>
+      <tr *ngIf="tableData.config.visibleColumnFiltersVisibility">
+        <th [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'"></th>
+        <ng-container *ngFor="let header of currentPageData.headers">
+          <th *ngIf="header.show">
+            <input type="text" class="form-control form-control-sm text-center" placeholder="{{header.title}}"
+              (change)="columnSearchChanged(header.dataProperty)" (keyup)="columnSearchChanged(header.dataProperty)"
+              [(ngModel)]="tableData.config.visibleColumnFilters[header.dataProperty]"
+              [disabled]="!header.enableColumnSearch || header.dataType === 'SELECT'" [name]="'filter_'+header.dataProperty" />
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="currentPageData.data.length === 0">
+        <tr *ngIf="tableData.isLoading">
+          <td [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'"></td>
+          <td [attr.colspan]="currentPageData.headers.length + 1" style="text-align: center;">
+            Loading...
+          </td>
+        </tr>
+        <tr *ngIf="!tableData.isLoading">
+          <td [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'"></td>
+          <td [attr.colspan]="currentPageData.headers.length + 1" style="text-align: center;">
+            No records found
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngFor="let row of currentPageData.data; let indi = index;">
+        <ng-container *ngIf="row !== undefined">
+          <tr [ngClass]="getRowClass(row)">
+            <td *ngIf="!row.expandable" [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'"></td>
+            <td *ngIf="row.expandable" [ngClass]="tableData.config.showExpandArrows ? 'used' : 'not-used'">
+              <button class="btn btn-secondary btn-sm collapsed-row-button" (click)="expandRow(row)" 
+                      *ngIf="!row.expanded"></button>
+              <button class="btn btn-secondary btn-sm expanded-row-button" (click)="collapseRow(row)" 
+                      *ngIf="row.expanded"></button>
+            </td>
+            <ng-container *ngFor="let header of currentPageData.headers">
+              <td *ngIf="header.show" [style]="row.styles[header.dataProperty]"
+                [ngClass]="row.classes[header.dataProperty]">
+                <ng-container *ngIf="header.dataType === 'ACTIONS'">
+                  <button class="tt-row-action  btn-xs btn btn-default" *ngFor="let action of row.actions"
+                    [ngClass]="action.classes" (click)="rowAction(row, action)" [title]="action.title">
+                    {{action.label}}
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="header.dataType === 'SELECT'">
+                  <input type="checkbox" class="header-check-box select-one" 
+                         [checked]="row.selected ? 'checked' : ''" 
+                         (change)="toggleSelectRow(row)"/>
+                </ng-container>
+                <ng-container *ngIf="header.dataType === 'INPUT_TEXT'">
+                  <input type="text" class="header-input-text tt-input-tag" [(ngModel)]="row.data[header.dataProperty]" [name]="indi + '_' + header.dataProperty" (change)="inputRowTextChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)"/>
+                </ng-container>
+                <ng-container *ngIf="header.dataType === 'INPUT_SELECT'">
+                  <select class="header-input-select tt-select-tag" [(ngModel)]="row.data[header.dataProperty]" [name]="indi + '_' + header.dataProperty" (change)="inputRowSelectChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)">
+                    <ng-container *ngIf="row.options !== undefined && row.options !== null">
+                      <option [value]="opt.value" *ngFor="let opt of row.options">{{opt.displayText}}</option>
+                    </ng-container>
+                  </select>
+                </ng-container>
+                <ng-container *ngIf="header.dataType !== 'ACTIONS' && header.dataType !== 'SELECT'">
+                  <ng-container *ngIf="row.clickables[header.dataProperty] !== undefined">
+                    <button class="popup-link-button"
+                      (click)="clickableClicked(row, header.dataProperty)">{{row.data[header.dataProperty]}}</button>
+                  </ng-container>
+                  <ng-container *ngIf="row.clickables[header.dataProperty] === undefined && header.dataType !== 'INPUT_TEXT' && header.dataType !== 'INPUT_SELECT'">
+                    {{row.data[header.dataProperty]}}
+                  </ng-container>
+                </ng-container>
+              </td>
+            </ng-container>
+          </tr>
+          <tr *ngIf="row.expanded" [ngClass]="row.expanded ? 'expanded-row-content' : 'collapsed-row-content'">
+            <td style="width: 10px;"></td>
+            <td [colSpan]="currentPageData.headers.length">
+              <angular-tree-table (inputRowSelectChanged)="inputRowSelectChangedChild($event)" (inputRowTextChanged)="inputRowTextChangedChild($event)" (rowSelectionChanged)="childRowSelectionChanged($event)" [tableData]="row.children"></angular-tree-table>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+  <div class="table-bottom">
+    <div class="page-number-status">
+      Showing {{(tableData.pageSize * (tableData.page - 1)) + 1}} to {{getPageTo()}} of
+      <ng-container *ngIf="tableData.filteredRowsCount != tableData.totalRowsCount">
+        {{tableData.filteredRowsCount}} rows filtered on {{tableData.totalRowsCount}}
+      </ng-container>
+      <ng-container *ngIf="tableData.filteredRowsCount === tableData.totalRowsCount">
+        {{tableData.filteredRowsCount}}
+      </ng-container>
+      rows
+    </div>
+    <div class="pagination-buttons" *ngIf="tableData.totalRowsCount > tableData.pageSize">
+      <div [class]="tableData.splashMessageFlag ? 'splash-message show' : 'splash-message hide'">
+        <div class="message-content">{{tableData.splashMessageContent}}</div>
+      </div>
+      <div class="btn btnGroup btn-group">
+        <button class="btn big" [class]="tableData.page === 1 ? 'btn big btn-secondary ' : 'btn big btn-secondary '"
+          (click)="changePage(1)">First</button>
+        <button class="btn" [class]="'btn btn-secondary'" (click)="changePage(tableData.page - 1)">&lt;</button>
+        <ng-container *ngFor="let pageNumber of pageNumbers()">
+          <button class="btn" [class]="tableData.page === pageNumber ? 'btn btn-primary ' : 'btn btn-secondary '"
+            (click)="changePage(pageNumber)">{{pageNumber}}</button>
+        </ng-container>
+        <button class="btn" [class]="'btn btn-secondary'" (click)="changePage(tableData.page + 1)">&gt;</button>
+        <button class="btn big"
+          [class]="tableData.page === tableData.totalPagesCount() ? 'btn big btn-secondary ' : 'btn big btn-secondary '"
+          (click)="changePage(tableData.totalPagesCount())">Last</button>
+      </div>
+    </div>
+  </div>
+</div>

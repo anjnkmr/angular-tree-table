@@ -1,0 +1,48 @@
+<div class="d-flex flex-column h-100">
+  <div class="d-flex flex-column container main-content flex-grow-1">
+    <div class="d-flex">
+      <div class="project-details d-flex flex-column flex-item">
+        <div class="project-heading">Angular Tree Table</div>
+        <div class="project-description">Expandanble and Collapsible Table structure in Angular in Angular Way</div>
+      </div>
+      <div class="d-flex flex-fill"></div>
+      <div class="d-flex flex-item">
+        <a class="doc-links" target="AngularTreeTable"
+          href="https://github.com/anjnkmr/angular-tree-table">
+          <svg class="octicon octicon-mark-github v-align-middle" height="35" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+        </a>
+        &nbsp;
+        <a class="doc-links" target="AngularTreeTable"
+          href="https://medium.com/@anjnkmr/angular-tree-table-bb9312c9720">
+          <svg width="35" height="35" viewBox="5 5 35 35" class="q"><path d="M5 40V5h35v35H5zm8.56-12.63c0 .56-.03.69-.32 1.03L10.8 31.4v.4h6.97v-.4L15.3 28.4c-.29-.34-.34-.5-.34-1.03v-8.95l6.13 13.36h.71l5.26-13.36v10.64c0 .3 0 .35-.19.53l-1.85 1.8v.4h9.2v-.4l-1.83-1.8c-.18-.18-.2-.24-.2-.53V15.94c0-.3.02-.35.2-.53l1.82-1.8v-.4h-6.47l-4.62 11.55-5.2-11.54h-6.8v.4l2.15 2.63c.24.3.29.37.29.77v10.35z"></path></svg>
+        </a>
+      </div>
+      <div class="d-flex flex-fill"></div>
+      <a class=" d-flex flex-item" target="AngularTreeTable" href="https://npmjs.com/package/angular-tree-table"><img
+          src="https://nodei.co/npm/angular-tree-table.png?downloads=true"></a>
+    </div>
+    <ul class="nav nav-fill nav-tabs">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="basic">Basic</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="select">Select</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="expandable">Expandable</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="expandable-header-less">No Headers</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="inputs">Inputs</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLinkActive="active" routerLink="server-side">Server Side</a>
+      </li>
+    </ul>
+    <div class="nav-content container flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
