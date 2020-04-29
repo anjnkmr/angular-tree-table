@@ -11,3 +11,4 @@ export * from './classes/tree-table-row';
 export * from './classes/tree-table-row-action';
 export * from './classes/tree-table-row-action-type';
 export * from './classes/tt-data-type';
+export * from './classes/tree-table-data-config';
