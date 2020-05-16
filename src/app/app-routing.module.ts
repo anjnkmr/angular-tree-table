@@ -6,6 +6,7 @@ import { ServerSideComponent } from './components/server-side/server-side.compon
 import { SelectComponent } from './components/select/select.component';
 import { InputsComponent } from './components/inputs/inputs.component';
 import { ExpandableHeaderLessComponent } from './components/expandable-header-less/expandable-header-less.component';
+import { ExpandableFixedVisibilityComponent } from './components/expandable-fixed-visibility/expandable-fixed-visibility.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'expandable-header-less',
     component: ExpandableHeaderLessComponent
+  },
+  {
+    path: 'expandable-fixed-visibility',
+    component: ExpandableFixedVisibilityComponent
   },
   {
     path: 'inputs',

@@ -10,6 +10,7 @@ import { SelectComponent } from './components/select/select.component';
 import { InputsComponent } from './components/inputs/inputs.component';
 import { ExpandableHeaderLessComponent } from './components/expandable-header-less/expandable-header-less.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ExpandableFixedVisibilityComponent } from './components/expandable-fixed-visibility/expandable-fixed-visibility.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AppRoutingModule } from './app-routing.module';
     ServerSideComponent,
     SelectComponent,
     InputsComponent,
-    ExpandableHeaderLessComponent
+    ExpandableHeaderLessComponent,
+    ExpandableFixedVisibilityComponent
   ],
   imports: [
     BrowserModule,

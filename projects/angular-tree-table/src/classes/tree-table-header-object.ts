@@ -7,10 +7,12 @@ export class TreeTableHeaderObject {
     show: boolean;
     dataType: TtDataType = TtDataType.TEXT;
     enableColumnSearch = true; //It will take effect when column search is enabled in data
-    constructor(title: string, dataProperty: string, style: string, show: boolean) {
+    canChangeVisbilityOnRuntime = true;
+    constructor(title: string, dataProperty: string, style: string, show: boolean, canChangeVisibilityOnRuntime: boolean = true) {
         this.dataProperty = dataProperty;
         this.title = title;
         this.style = style;
         this.show = show;
+        this.canChangeVisbilityOnRuntime = canChangeVisibilityOnRuntime;
     }
 }
