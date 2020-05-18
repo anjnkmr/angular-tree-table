@@ -374,7 +374,11 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
 
   exportExcelLocal() {
     const dataRows = [];
-    for (let d of this.tableData.data) {
+    let dataRowsSource = this.tableData.data;
+    if (this.tableData.config.excelExportOnlyFilteredRows) {
+      dataRowsSource = this.filteredData;
+    }
+    for (let d of dataRowsSource) {
       const obj = {};
       for (let h of this.tableData.headers) {
         obj[h.title] = d.data[h.dataProperty];

@@ -146,6 +146,12 @@ export class TreeTableDataConfig {
      */
     excelExportButton? = false;
     /**
+     * This is used to configure the ExcelExport only filtered true
+     * 
+     * Default value is `false`
+     */
+    excelExportOnlyFilteredRows? = false;
+    /**
      * This is used to configure the ExcelExport file name
      * 
      * Default value is `ExportFile`

@@ -9,7 +9,10 @@ import { TreeTableHeaderObject, TreeTableRow, TreeTableData } from 'angular-tree
 export class BasicComponent implements OnInit {
 
   tableData: TreeTableData = null;
-  tableConfig = {};
+  tableConfig = {
+    excelExportButton: true,
+    excelExportOnlyFilteredRows: true
+  };
   tableHeaders: TreeTableHeaderObject[] = [];
 
   constructor() { }

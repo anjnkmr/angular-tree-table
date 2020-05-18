@@ -143,6 +143,9 @@ export class TreeTableData {
             if (config.excelExportButton !== undefined && config.excelExportButton !== null) {
                 this.config.excelExportButton = config.excelExportButton;
             }
+            if (config.excelExportOnlyFilteredRows !== undefined && config.excelExportOnlyFilteredRows !== null) {
+                this.config.excelExportOnlyFilteredRows = config.excelExportOnlyFilteredRows;
+            }
         } else {
             // console.log('No Properties');
         }
