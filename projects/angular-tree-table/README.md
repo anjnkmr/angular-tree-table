@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/angular-tree-table.png)](https://nodei.co/npm/angular-tree-table/)
+
 Prerequisites
 -------------
 
@@ -62,7 +64,7 @@ Declare the below methods to populate dummy data into the table
 populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
-      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1}, false, null);
+      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1. address: {dno: '1-23'}}, false, null);
       data.push(row);
     }
     this.tableData = new TreeTableData(this.tableConfig);
@@ -74,6 +76,8 @@ populateDummyData() {
     this.tableHeaders.push(new TreeTableHeaderObject('Sno', 'sno', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Name', 'name', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT(Name: |||name|||<br/>|||Age: |||age)', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));
     this.tableData.headers = this.tableHeaders;
   }
 ```

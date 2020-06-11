@@ -24,7 +24,7 @@ export class BasicComponent implements OnInit {
   populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
-      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1}, false, null);
+      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, address: {dno: '12-'+(i+1)}}, false, null);
       data.push(row);
     }
     this.tableData = new TreeTableData(this.tableConfig);
@@ -35,8 +35,9 @@ export class BasicComponent implements OnInit {
   populateHeaders() {
     this.tableHeaders.splice(0, this.tableHeaders.length);
     this.tableHeaders.push(new TreeTableHeaderObject('Sno', 'sno', null, true));
-    this.tableHeaders.push(new TreeTableHeaderObject('Name', 'name', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT(Name: |||name|||<br/>|||Age: |||age * 2)', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));
     this.tableData.headers = this.tableHeaders;
   }
 

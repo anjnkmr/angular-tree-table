@@ -147,11 +147,13 @@
                 <ng-container *ngIf="header.dataType !== 'ACTIONS' && header.dataType !== 'SELECT'">
                   <ng-container *ngIf="row.clickables[header.dataProperty] !== undefined">
                     <button class="popup-link-button"
-                      (click)="clickableClicked(row, header.dataProperty)">{{row.data[header.dataProperty]}}</button>
+                      (click)="clickableClicked(row, header.dataProperty)"
+                      [innerHTML]="row.data[header.dataProperty]">
+                    </button>
                   </ng-container>
                   <ng-container
                     *ngIf="row.clickables[header.dataProperty] === undefined && header.dataType !== 'INPUT_TEXT' && header.dataType !== 'INPUT_SELECT'">
-                    {{row.data[header.dataProperty]}}
+                    <span class="inner-content-table-cell" [innerHTML]="row.data[header.dataProperty]"></span>
                   </ng-container>
                 </ng-container>
               </td>

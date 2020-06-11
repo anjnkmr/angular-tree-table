@@ -1,5 +1,7 @@
-import { Component, OnInit, KeyValueDiffer, Input, KeyValueDiffers,
-         KeyValueChanges, AfterContentInit, Output, EventEmitter, DoCheck } from '@angular/core';
+import {
+  Component, OnInit, KeyValueDiffer, Input, KeyValueDiffers,
+  KeyValueChanges, AfterContentInit, Output, EventEmitter, DoCheck
+} from '@angular/core';
 import * as moment_ from 'moment';
 import { TreeTableData } from '../classes/tree-table-data';
 import { TreeTableRow } from '../classes/tree-table-row';
@@ -9,6 +11,7 @@ import { TtDataType } from '../classes/tt-data-type';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { TreeTableRowActionType } from '../classes/tree-table-row-action-type';
+import { isArray } from 'util';
 
 declare var $: any;
 
@@ -67,7 +70,138 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
 
   dataChanged(changes: KeyValueChanges<string, any>) {
     this.redefineTableDataFunctions();
+    this.evaluateExpressionsInTableData();
     this.setPageData(this.tableData.page);
+  }
+
+  evaluateExpressionsInTableData() {
+    for (let i = 0; i < this.tableData.data.length; i++) {
+      const rowData = this.tableData.data[i];
+      this.tableData.headers.forEach(header => {
+        const evaluatedValue = this.evaluateConcat(header.dataProperty, rowData.data);
+        rowData.data[header.dataProperty] = evaluatedValue;
+      });
+    }
+  }
+
+  executeExpression(expression: string, data: any): any {
+    let result = undefined;
+    if (expression.indexOf(' - ') > -1) {
+      const expressionParts = expression.split(' - ');
+      for (let [index, expressionPart] of expressionParts.entries()) {
+        expressionParts[index] = this.executeExpression(expressionPart, data);
+      }
+      expressionParts.forEach(v => {
+        if (result === undefined) {
+          result = v;
+        } else {
+          result = result - parseFloat(v);
+        }
+      });
+      return result;
+    } else if (expression.indexOf(' + ') > -1) {
+      const expressionParts = expression.split(' + ');
+      for (let [index, expressionPart] of expressionParts.entries()) {
+        expressionParts[index] = this.executeExpression(expressionPart, data);
+      }
+      expressionParts.forEach(v => {
+        if (result === undefined) {
+          result = v;
+        } else {
+          result = result + parseFloat(v);
+        }
+      });
+      return result;
+    } else if (expression.indexOf(' * ') > -1) {
+      const expressionParts = expression.split(' * ');
+      for (let [index, expressionPart] of expressionParts.entries()) {
+        expressionParts[index] = this.executeExpression(expressionPart, data);
+      }
+      expressionParts.forEach(v => {
+        if (result === undefined) {
+          result = v;
+        } else {
+          result = result * parseFloat(v);
+        }
+      });
+      return result;
+    } else if (expression.indexOf(' / ') > -1) {
+      const expressionParts = expression.split(' / ');
+      for (let [index, expressionPart] of expressionParts.entries()) {
+        expressionParts[index] = this.executeExpression(expressionPart, data);
+      }
+      expressionParts.forEach(v => {
+        if (result === undefined) {
+          result = v;
+        } else {
+          result = result / parseFloat(v);
+        }
+      });
+      return result;
+    } else {
+      return this.getValueWithPathFromObject(expression, data);
+    }
+  }
+
+  evaluateConcat(expression: string, data: any) {
+    if (expression.startsWith('=CONCAT(') && expression.endsWith(')')) {
+        expression = expression.replace('=CONCAT(', '');
+        expression = expression.substring(0, expression.length - 1);
+        const expressionParts = expression.split('|||');
+        let result = '';
+        console.log('data concat', data, result);
+        expressionParts.forEach(v => {
+            result += '' + this.executeExpression(v, data);
+        });
+        return result;
+    } else {
+        console.log('data no concat', data);
+        return this.executeExpression(expression, data);
+    }
+}
+
+  /**
+   * {
+   *    "PO_NUMBER": "123456",
+   *    "PO_TAX": [{
+   *        "SGST": 15
+   *    }]
+   * }
+   * 
+   * PO_TAX.SGST
+   * PO_TAX[0].SGST
+   * PO_TAX[0].SGST + PO_TAX[0].CGST
+   * =CONCAT('SGST: '|||PO_TAX[0].SGST + PO_TAX[0].CGST|||'\r\n')
+   */
+  getValueWithPathFromObject(path: string, data: any) {
+    const pathParts = path.split('.');
+    let result = data;
+    for (let part of pathParts) {
+      if (part.endsWith(']')) {
+        const subParts = part.split('[');
+        const arrayProperty = subParts[0];
+        if (result[arrayProperty] === undefined || result[arrayProperty] === null || !Array.isArray(result[arrayProperty])) {
+          return '';
+        }
+        const arrayIndex = parseInt(subParts[1].replace(']', ''));
+        if (isNaN(arrayIndex)) {
+          return '#ERR: NaN';
+        }
+        result = result[arrayProperty][arrayIndex];
+      } else {
+        if (result === undefined) {
+          return '';
+        }
+        if (part === ' ') {
+          return ' ';
+        }
+        if (result[part] === undefined) {
+          return part;
+        }
+        result = result[part];
+      }
+    }
+    return result;
   }
 
   refreshTable() {
@@ -249,6 +383,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
       this.filteredData.splice(0, this.filteredData.length);
       this.filteredData = this.tableData.data.filter((v) => {
         const keys = Object.keys(v.data);
+        // Need to do calculations
         let matched = false;
         if (this.tableData.keyword !== undefined && this.tableData.keyword !== null && this.tableData.keyword.trim() !== '') {
           for (const key of keys) {
@@ -318,11 +453,11 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
       this.currentPageData.data.splice(0, this.currentPageData.data.length);
       for (let i = startIndex; i < parseInt(startIndex + '', 10) + parseInt(this.tableData.pageSize + '', 10); i++) {
         if (this.filteredData[i] !== null && this.filteredData[i] !== undefined) {
+          // Inserting into current page
           this.currentPageData.data.push(this.filteredData[i]);
         }
       }
     }
-
   }
 
   clickableClicked(row: TreeTableRow, dataProperty: string) {
