@@ -78,8 +78,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     for (let i = 0; i < this.tableData.data.length; i++) {
       const rowData = this.tableData.data[i];
       this.tableData.headers.forEach(header => {
-        const evaluatedValue = this.evaluateConcat(header.dataProperty, rowData.data);
-        rowData.data[header.dataProperty] = evaluatedValue;
+        rowData.data[header.dataProperty] = this.evaluateConcat(header.dataProperty, rowData.data);
       });
     }
   }
@@ -144,18 +143,22 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
   }
 
   evaluateConcat(expression: string, data: any) {
+    if (data === undefined) {
+      return undefined;
+    }
+    if (data[expression] !== undefined && data[expression] !== null) {
+      return data[expression];
+    }
     if (expression.startsWith('=CONCAT(') && expression.endsWith(')')) {
         expression = expression.replace('=CONCAT(', '');
         expression = expression.substring(0, expression.length - 1);
         const expressionParts = expression.split('|||');
         let result = '';
-        console.log('data concat', data, result);
         expressionParts.forEach(v => {
             result += '' + this.executeExpression(v, data);
         });
         return result;
     } else {
-        console.log('data no concat', data);
         return this.executeExpression(expression, data);
     }
 }
