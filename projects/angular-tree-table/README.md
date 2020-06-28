@@ -1,6 +1,6 @@
 [![NPM](https://nodei.co/npm/angular-tree-table.png)](https://nodei.co/npm/angular-tree-table/)
 
-Prerequisites
+### Prerequisites
 -------------
 
 `Node JS` >= 9
@@ -19,21 +19,21 @@ Prerequisites
 
 `npm i moment` —To sort date columns while not using server side processing
 
-Installation
+### Installation
 ------------
 
 `npm i jquery popper.js bootstrap file-saver xlsx moment angular-tree-table --save`
 
-Updating `angular.json`
+### Updating `angular.json`
 -----------------------
 
 Adding jQuery, Popper JS, Bootstrap CSS and JS -
 Add the following lines in scripts array under build section
 
 ```
-"node\_modules/jquery/dist/jquery.min.js",
-"node\_modules/popper.js/dist/umd/popper.min.js",
-"node\_modules/bootstrap/dist/js/bootstrap.min.js"
+"node_modules/jquery/dist/jquery.min.js",
+"node_modules/popper.js/dist/umd/popper.min.js",
+"node_modules/bootstrap/dist/js/bootstrap.min.js"
 ```
 
 Add the following lines in styles array under build section
@@ -42,12 +42,12 @@ Add the following lines in styles array under build section
 
 * * *
 
-Integrating in Angular Application
+### Integrating in Angular Application
 ----------------------------------
 
 import `AngularTreeTableModule` in `app.module.ts`.
 
-Configuration in Component
+### Configuration in Component
 --------------------------
 
 Declare the below variables for table initialization
@@ -55,7 +55,7 @@ Declare the below variables for table initialization
 ```
 tableData: TreeTableData = null; //Table Data Holder
 tableConfig = new TreeTableDataConfig(); //Table Configuration
-tableHeaders: TreeTableHeaderObject\[\] = \[\]; //Table Headers and Property Binding
+tableHeaders: TreeTableHeaderObject[] = []; //Table Headers and Property Binding
 ```
 
 Declare the below methods to populate dummy data into the table
@@ -82,7 +82,7 @@ populateDummyData() {
   }
 ```
 
-Adding View Element in Component View
+### Adding View Element in Component View
 -------------------------------------
 
 Add the below tag in Component HTML View
@@ -97,7 +97,7 @@ Basic Tree Table Screenshot
 * * *
 ![Basic Tree Table](https://miro.medium.com/max/1400/1\*rF21qkfblc4QlutrC8Lomw.png)
 
-Expandable Table View
+### Expandable Table View
 ---------------------
 
 To configure the row as an expandable, we need to configure the table as below
@@ -142,7 +142,7 @@ Expandable Table Screenshot
 
 
 
-Column Visibility Options
+### Column Visibility Options
 -------------------------
 
 ```
@@ -156,7 +156,7 @@ Column Visibility Options Demo — Popover and Buttons
 
 
 
-Other Configuration Options
+### Other Configuration Options
 ---------------------------
 
 There are so many options, most of them are self explanatory
@@ -211,6 +211,10 @@ https://anjnkmr.github.io/angular-tree-table
 CODE:
 -----
 https://github.com/anjnkmr/angular-tree-table
+
+**dev.to Link**
+----------------------
+https://dev.to/anjnkmr/angular-tree-table-10jm
 
 **Medium Link**
 ----------------------
