@@ -179,6 +179,24 @@ export class TreeTableDataConfig {
      * It is WIP, which will used to configure the callbacks for events of the `angular-tree-table`
      */
     events?: TreeTableDataEvents = new TreeTableDataEvents();
+
+    /**
+     * Expandable Type
+     * Default: `ExpandableType.DIFFERENT_HEADERS`
+     */
+    expandableType?: ExpandableType = ExpandableType.DIFFERENT_HEADERS;
+
+    expandableArrowPlacement?: ExpandableArrowPlacement = ExpandableArrowPlacement.SEPERATE_COLUMN;
+}
+
+export enum ExpandableType {
+    DIFFERENT_HEADERS = 'DIFFERENT_HEADERS', 
+    SAME_HEADERS = 'SAME_HEADERS'
+}
+
+export enum ExpandableArrowPlacement {
+    SEPERATE_COLUMN = 'SEPERATE_COLUMN', 
+    FIRST_COLUMN = 'FIRST_COLUMN'
 }
 
 export class TreeTableDataEvents {

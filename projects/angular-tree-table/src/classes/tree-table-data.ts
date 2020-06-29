@@ -1,8 +1,35 @@
 import { TreeTableHeaderObject } from './tree-table-header-object';
-import { TreeTableRow } from './tree-table-row';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { TreeTableDataConfig, TreeTableDataServerConfig } from './tree-table-data-config';
+import { TreeTableRowAction } from './tree-table-row-action';
+
+export class TreeTableRow {
+    id: string = null;
+    data: {} = {};
+    expandable = false;
+    children: TreeTableData = null;
+    expanded = false;
+    // Clickables Context for Actions
+    clickablesContext: any = null;
+    // Clickable Properties and Actions
+    clickables: {} = {};
+    styles: {} = {};
+    classes: string[] = [];
+    // Actions Header Buttons
+    actions: TreeTableRowAction[] = [];
+    // Is row selected
+    selected: boolean = false;
+    options: {value: string, displayText: string}[] =  [];
+
+    constructor(id: string, data: {}, expandable: boolean, children: TreeTableData) {
+        this.id = id;
+        this.data = data;
+        this.expandable = expandable;
+        this.children = children;
+    }
+}
+
 
 export class TreeTableData {
     headers: TreeTableHeaderObject[] = [];
@@ -55,6 +82,12 @@ export class TreeTableData {
             }
             if (config.showExpandArrows !== undefined && config.showExpandArrows !== null) {
                 this.config.showExpandArrows = config.showExpandArrows;
+            }
+            if (config.expandableType !== undefined && config.expandableType !== null) {
+                this.config.expandableType = config.expandableType;
+            }
+            if (config.expandableArrowPlacement !== undefined && config.expandableArrowPlacement !== null) {
+                this.config.expandableArrowPlacement = config.expandableArrowPlacement;
             }
             if (config.events === undefined || config.events === null) {
                 config.events = this.config.events;

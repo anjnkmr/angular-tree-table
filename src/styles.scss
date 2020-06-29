@@ -28,3 +28,9 @@ app-inputs {
         }
     }
 }
+table tr th:first-child {
+    width: 90px;
+}
+table tr td:first-child span.inner-content-table-cell {
+    text-align: left;
+}

@@ -1,8 +1,59 @@
 :host {
+    display: contents;
     .dropDownBtn-data {
         overflow: visible;
         padding: 5px;
     }
+
+    &.expandable-arrow-position-FIRST_COLUMN  {
+        td:first-child {
+            span.inner-content-table-cell {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                padding-left: 30px;
+                padding-right: 10px;
+            }
+        }
+        tr.expanded-row {
+            box-sizing: border-box;
+            border: 2px solid #00000080;
+            border-bottom: 0px;
+            font-weight: bold;
+            background-color: #0000000d;
+        }
+        tr.expanded-row + angular-tree-table > tr {
+            border: 2px solid #00000080;
+            border-top: 0px;
+            border-bottom: 0px;
+        }
+        tr.expanded-row + angular-tree-table > tr:last-child {
+            border: 2px solid #00000080;
+            border-top: 0px;
+        }
+    }
+
+    @for $i from 1 through 100 {
+        &.expandable-arrow-position-FIRST_COLUMN.slevel-#{$i} {
+            tr {
+                span.collapsed-row-button, span.expanded-row-button {
+                    position: absolute;
+                    left: $i * 20px;
+                }
+                td:first-child {
+                    padding-left: $i * 20px;
+                    span.inner-content-table-cell {
+                        display: inline-block;
+                        width: 100%;
+                        height: 100%;
+                        padding-left: 20px;
+                    }
+                }
+            }
+        }
+    } 
+
+    
 
     .tree-table-loading {
         width: 100%;
@@ -30,6 +81,10 @@
         }
     }
 
+    .table-sm td, .table-sm th {
+        padding: 0.1rem;
+    }
+
     .tree-table {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -49,6 +104,7 @@
         .column-visibility {
             text-align: center;
         }
+       
 
         .column-visibility,
         .dropDownBtn-data {
@@ -159,8 +215,36 @@
             .expanded-row-content {
                 background: 0 0;
             }
+            
 
             tr {
+                span.collapsed-row-button, span.expanded-row-button {
+                    position: absolute;
+                    left: 10px;
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                }
+                span.collapsed-row-button:after {
+                    content: "";
+                    width: 0;
+                    height: 0;
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    border-left: 5px solid rgb(112, 112, 112);
+                    display: inline-block;
+                }
+                span.expanded-row-button:after {
+                    content: "";
+                    width: 0;
+                    height: 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid rgb(112, 112, 112);;
+                    display: inline-block;                        
+                }
+                
                 > td:first-child.not-used,
                 > th:first-child.not-used {
                     display: none;
@@ -187,7 +271,7 @@
                         border-left: 5px solid transparent;
                         border-right: 5px solid transparent;
                         border-top: 5px solid #fff;
-                        display: inline-block;
+                        display: inline-block;                        
                     }
                 }
 

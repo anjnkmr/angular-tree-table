@@ -1,17 +1,15 @@
 import {
   Component, OnInit, KeyValueDiffer, Input, KeyValueDiffers,
-  KeyValueChanges, AfterContentInit, Output, EventEmitter, DoCheck
+  KeyValueChanges, Output, EventEmitter, DoCheck, HostBinding
 } from '@angular/core';
 import * as moment_ from 'moment';
-import { TreeTableData } from '../classes/tree-table-data';
-import { TreeTableRow } from '../classes/tree-table-row';
+import { TreeTableData, TreeTableRow } from '../classes/tree-table-data';
 import { TreeTableRowAction } from '../classes/tree-table-row-action';
 import { TreeTableHeaderObject } from '../classes/tree-table-header-object';
 import { TtDataType } from '../classes/tt-data-type';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { TreeTableRowActionType } from '../classes/tree-table-row-action-type';
-import { isArray } from 'util';
 
 declare var $: any;
 
@@ -24,6 +22,7 @@ const moment = moment_;
 })
 export class AngularTreeTableComponent implements OnInit, DoCheck {
 
+  @HostBinding('class') componentClass = '';
   private dataDiffers: KeyValueDiffer<string, any>;
   @Input() tableData = new TreeTableData();
   filteredData: TreeTableRow[] = [];
@@ -45,6 +44,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.validateData();
     this.setPageData(this.tableData.page);
+    this.componentClass = 'slevel-'+this.tableData.config.level + ' expandable-arrow-position-' + this.tableData.config.expandableArrowPlacement + ' expandable-type-' + this.tableData.config.expandableType;
     this.className = 'table-tree level' + this.tableData.config.level;
     if (this.tableData.config.level === 0) {
       console.warn('Initialize Search Functionality');
@@ -235,6 +235,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
 
   expandRow(row: TreeTableRow) {
     row.expanded = true;
+    row.children.config.level = this.tableData.config.level + 1;
     if (this.tableData.config.events.rowExpanded !== null) {
       this.tableData.config.events.rowExpanded(row, this.tableData);
     }
