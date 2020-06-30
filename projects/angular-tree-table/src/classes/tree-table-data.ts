@@ -22,6 +22,8 @@ export class TreeTableRow {
     selected: boolean = false;
     options: {value: string, displayText: string}[] =  [];
 
+    defaultExpand = false;
+
     constructor(id: string, data: {}, expandable: boolean, children: TreeTableData) {
         this.id = id;
         this.data = data;

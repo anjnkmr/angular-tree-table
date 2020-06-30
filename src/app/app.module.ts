@@ -11,6 +11,7 @@ import { InputsComponent } from './components/inputs/inputs.component';
 import { ExpandableHeaderLessComponent } from './components/expandable-header-less/expandable-header-less.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ExpandableFixedVisibilityComponent } from './components/expandable-fixed-visibility/expandable-fixed-visibility.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ExpandableFixedVisibilityComponent } from './components/expandable-fixe
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     AngularTreeTableModule
   ],
   providers: [],

@@ -461,6 +461,11 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
           this.currentPageData.data.push(this.filteredData[i]);
         }
       }
+      for (let rw of this.currentPageData.data) {
+        if (rw.defaultExpand) {
+          this.expandRow(rw);
+        }
+      }
     }
   }
 
