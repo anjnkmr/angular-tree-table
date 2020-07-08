@@ -220,10 +220,13 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
           }
         }
         if (partVariableType === '$VD') {
-          const rawDate = result[partVariable];
+          let rawDate = result[partVariable];
           let dateFormat = partParts[2];
           if (dateFormat === undefined || dateFormat === null || dateFormat === '') {
             dateFormat = 'DD-MMM-YYYY';
+          }
+          if (typeof rawDate === 'string') {
+            rawDate = new Date(rawDate);
           }
           result = moment(rawDate).format(dateFormat);
         } else {

@@ -24,7 +24,7 @@ export class BasicComponent implements OnInit {
   populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
-      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, joined: new Date(), address: {dno: '12-'+(i+1)}}, false, null);
+      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, joined: '2020-07-20', address: {dno: '12-'+(i+1)}}, false, null);
       data.push(row);
     }
     this.tableData = new TreeTableData(this.tableConfig);
