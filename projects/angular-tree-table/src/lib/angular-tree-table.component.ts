@@ -180,8 +180,22 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     const pathParts = path.split('.');
     let result = data;
     for (let part of pathParts) {
-      if (part.endsWith(']')) {
-        const subParts = part.split('[');
+      // $VA: Old Version support - which will automatically detect the data type
+      if (!part.startsWith('$SS:') && !part.startsWith('$VS:') && !part.startsWith('$VD:')) {
+        part = '$VA:' + part;
+      }
+      if (part.startsWith('$SS:')) {
+        return part.replace('$SS:', '');
+      }
+      let partParts = part.split(':');
+      let partVariableType = partParts[0];
+      let partVariable = partParts[1];
+      if (partVariableType === '$VA') {
+        partVariable = part.replace('$VA:', '');
+      }
+      
+      if (partVariable.endsWith(']')) {
+        const subParts = partVariable.split('[');
         const arrayProperty = subParts[0];
         if (result[arrayProperty] === undefined || result[arrayProperty] === null || !Array.isArray(result[arrayProperty])) {
           return '';
@@ -195,13 +209,26 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
         if (result === undefined) {
           return '';
         }
-        if (part === ' ') {
+        if (partVariable === ' ') {
           return ' ';
         }
-        if (result[part] === undefined) {
-          return part;
+        if (result[partVariable] === undefined) {
+          if (partVariableType === '$VA') {
+            return partVariable;
+          } else {
+            return '';
+          }
         }
-        result = result[part];
+        if (partVariableType === '$VD') {
+          const rawDate = result[partVariable];
+          let dateFormat = partParts[2];
+          if (dateFormat === undefined || dateFormat === null || dateFormat === '') {
+            dateFormat = 'DD-MMM-YYYY';
+          }
+          result = moment(rawDate).format(dateFormat);
+        } else {
+          result = result[partVariable];
+        }
       }
     }
     return result;
