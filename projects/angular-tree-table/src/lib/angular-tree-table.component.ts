@@ -177,25 +177,25 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
    * =CONCAT('SGST: '|||PO_TAX[0].SGST + PO_TAX[0].CGST|||'\r\n')
    */
   getValueWithPathFromObject(path: string, data: any) {
-    const pathParts = path.split('.');
+    // $VA: Old Version support - which will automatically detect the data type
+    if (!path.startsWith('$SS:') && !path.startsWith('$VS:') && !path.startsWith('$VD:') && !path.startsWith('$VA:')) {
+      path = '$VA:' + path;
+    }
+    if (path.startsWith('$SS:')) {
+      return path.replace('$SS:', '');
+    }
+    let partParts = path.split(':');
+    let partVariableType = partParts[0];
+    let partVariable = partParts[1];
+    if (partVariableType === '$VA') {
+      partVariable = path.replace('$VA:', '');
+    }
+
+    const pathParts = partVariable.split('.');
     let result = data;
-    for (let part of pathParts) {
-      // $VA: Old Version support - which will automatically detect the data type
-      if (!part.startsWith('$SS:') && !part.startsWith('$VS:') && !part.startsWith('$VD:')) {
-        part = '$VA:' + part;
-      }
-      if (part.startsWith('$SS:')) {
-        return part.replace('$SS:', '');
-      }
-      let partParts = part.split(':');
-      let partVariableType = partParts[0];
-      let partVariable = partParts[1];
-      if (partVariableType === '$VA') {
-        partVariable = part.replace('$VA:', '');
-      }
-      
-      if (partVariable.endsWith(']')) {
-        const subParts = partVariable.split('[');
+    for (let [index, part] of pathParts.entries()) {
+      if (part.endsWith(']')) {
+        const subParts = part.split('[');
         const arrayProperty = subParts[0];
         if (result[arrayProperty] === undefined || result[arrayProperty] === null || !Array.isArray(result[arrayProperty])) {
           return '';
@@ -209,28 +209,32 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
         if (result === undefined) {
           return '';
         }
-        if (partVariable === ' ') {
+        if (part === ' ') {
           return ' ';
         }
-        if (result[partVariable] === undefined) {
+        if (result[part] === undefined) {
           if (partVariableType === '$VA') {
-            return partVariable;
+            return part;
           } else {
             return '';
           }
         }
         if (partVariableType === '$VD') {
-          let rawDate = result[partVariable];
-          let dateFormat = partParts[2];
-          if (dateFormat === undefined || dateFormat === null || dateFormat === '') {
-            dateFormat = 'DD-MMM-YYYY';
+          if (pathParts.length - 1 === index) {
+            let rawDate = result[part];
+            let dateFormat = partParts[2];
+            if (dateFormat === undefined || dateFormat === null || dateFormat === '') {
+              dateFormat = 'DD-MMM-YYYY';
+            }
+            if (typeof rawDate === 'string') {
+              rawDate = new Date(rawDate);
+            }
+            result = moment(rawDate).format(dateFormat);
+          } else {
+            result = result[part];
           }
-          if (typeof rawDate === 'string') {
-            rawDate = new Date(rawDate);
-          }
-          result = moment(rawDate).format(dateFormat);
         } else {
-          result = result[partVariable];
+          result = result[part];
         }
       }
     }
