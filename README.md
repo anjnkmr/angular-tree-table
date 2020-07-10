@@ -41,7 +41,7 @@ Add the following lines in scripts array under build section
 
 Add the following lines in styles array under build section
 
-`”node_modules/bootstrap/dist/css/bootstrap.min.css”`
+`"node_modules/bootstrap/dist/css/bootstrap.min.css"`
 
 * * *
 
@@ -115,7 +115,7 @@ tableConfig = {
 Update the **populateDummyData** method as below to add Children to row
 
 ```
-**populateDummyData**() {
+populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
       const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1}, false, null);
