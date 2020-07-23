@@ -24,7 +24,7 @@ export class BasicComponent implements OnInit {
   populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
-      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, dates: {joined: '2020-07-08T06:42:56.649Z'}, address: {dno: '12-'+(i+1)}}, false, null);
+      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, dates: {joined: '2020-07-08T06:02:56.649Z', created: new Date()}, address: {dno: '12-'+(i+1)}}, false, null);
       data.push(row);
     }
     this.tableData = new TreeTableData(this.tableConfig);
@@ -35,7 +35,7 @@ export class BasicComponent implements OnInit {
   populateHeaders() {
     this.tableHeaders.splice(0, this.tableHeaders.length);
     this.tableHeaders.push(new TreeTableHeaderObject('Sno', 'sno', null, true));
-    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Created on |||$VD:dates.created:DD-MM HH-mm|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Joined', '$VD:dates.joined:MMM-YYYY', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));

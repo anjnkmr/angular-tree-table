@@ -112,7 +112,7 @@ tableConfig = {
 Update the **populateDummyData** method as below to add Children to row
 
 ```
-**populateDummyData**() {
+populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
       const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1}, false, null);
@@ -203,14 +203,7 @@ tableConfig = {
 ----
 **DEMO:**
 -----
-
-AngularTreeTable Sample
-----------------------
 https://anjnkmr.github.io/angular-tree-table
-
-CODE:
------
-https://github.com/anjnkmr/angular-tree-table
 
 **dev.to Link**
 ----------------------

@@ -227,7 +227,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               dateFormat = 'DD-MMM-YYYY';
             }
             if (typeof rawDate === 'string') {
-              rawDate = new Date(rawDate);
+              rawDate = moment(rawDate);
             }
             result = moment(rawDate).format(dateFormat);
           } else {
