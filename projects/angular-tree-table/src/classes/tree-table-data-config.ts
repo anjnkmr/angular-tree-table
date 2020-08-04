@@ -187,6 +187,18 @@ export class TreeTableDataConfig {
     expandableType?: ExpandableType = ExpandableType.DIFFERENT_HEADERS;
 
     expandableArrowPlacement?: ExpandableArrowPlacement = ExpandableArrowPlacement.SEPERATE_COLUMN;
+
+    /** 
+     * Locale Setting: This will be used when you are using $VC (Currency variables) for now
+     * Default: `en-IN`
+     */
+    locale?: string = 'en-IN';
+
+    /**
+     * Currency code: This will be used when you are using $VC (Currency variables) for now
+     * Default: `INR`
+     */
+    currencyCode?: string = 'INR';
 }
 
 export enum ExpandableType {

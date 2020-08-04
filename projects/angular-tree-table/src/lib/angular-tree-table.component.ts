@@ -146,6 +146,9 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     if (data === undefined) {
       return undefined;
     }
+    if (expression === undefined || expression === null) {
+      return undefined;
+    }
     if (data[expression] !== undefined && data[expression] !== null) {
       return data[expression];
     }
@@ -178,7 +181,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
    */
   getValueWithPathFromObject(path: string, data: any) {
     // $VA: Old Version support - which will automatically detect the data type
-    if (!path.startsWith('$SS:') && !path.startsWith('$VS:') && !path.startsWith('$VD:') && !path.startsWith('$VA:')) {
+    if (!path.startsWith('$SS:') && !path.startsWith('$VS:') && !path.startsWith('$VD:') && !path.startsWith('$VA:') && !path.startsWith('$VC:')) {
       path = '$VA:' + path;
     }
     if (path.startsWith('$SS:')) {
@@ -230,6 +233,21 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               rawDate = moment(rawDate);
             }
             result = moment(rawDate).format(dateFormat);
+          } else {
+            result = result[part];
+          }
+        } else if (partVariableType === '$VC') {
+          if (pathParts.length - 1 === index) {
+            if (result === undefined) {
+              result = 0;
+            }
+            let currencyOptional = {
+              style: "currency",
+              currency: this.tableData.config.currencyCode,
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+            result = new Number(result).toLocaleString(this.tableData.config.locale, currencyOptional);
           } else {
             result = result[part];
           }

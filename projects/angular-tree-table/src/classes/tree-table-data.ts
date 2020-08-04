@@ -181,6 +181,12 @@ export class TreeTableData {
             if (config.excelExportOnlyFilteredRows !== undefined && config.excelExportOnlyFilteredRows !== null) {
                 this.config.excelExportOnlyFilteredRows = config.excelExportOnlyFilteredRows;
             }
+            if (config.locale !== undefined && config.locale !== null) {
+                this.config.locale = config.locale;
+            }
+            if (config.currencyCode !== undefined && config.currencyCode !== null) {
+                this.config.currencyCode = config.currencyCode;
+            }
         } else {
             // console.log('No Properties');
         }
