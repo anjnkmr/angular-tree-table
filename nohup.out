@@ -2,3 +2,4 @@ polybar|warn:  pulseaudio: using default sink alsa_output.pci-0000_00_1b.0.analo
 polybar|warn:  Systray selection already managed (window=0x1e00009)
 polybar|warn:  pulseaudio: using default sink alsa_output.pci-0000_00_1b.0.analog-stereo
 polybar|warn:  Systray selection already managed (window=0x1e00009)
+polybar|warn:  Termination signal received, shutting down...

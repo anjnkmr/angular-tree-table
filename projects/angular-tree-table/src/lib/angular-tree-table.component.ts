@@ -238,8 +238,9 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
           }
         } else if (partVariableType === '$VC') {
           if (pathParts.length - 1 === index) {
-            if (result === undefined) {
-              result = 0;
+            let partVal = result[part];
+            if (partVal === undefined) {
+              partVal = 0;
             }
             let currencyOptional = {
               style: "currency",
@@ -247,7 +248,8 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
             }
-            result = new Number(result).toLocaleString(this.tableData.config.locale, currencyOptional);
+            console.log('restul', partVal);
+            result = new Number(partVal).toLocaleString(this.tableData.config.locale, currencyOptional);
           } else {
             result = result[part];
           }
