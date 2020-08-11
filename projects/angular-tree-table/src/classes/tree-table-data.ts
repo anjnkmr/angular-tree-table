@@ -242,7 +242,13 @@ export class TreeTableData {
             this.http.get(this.serverConfig.excelExportUrl, { params, responseType: 'blob' }).subscribe(resp => {
                 dis.isLoading = false;
                 const blob = new Blob([resp], {type: 'application/vnd.ms-excel'} );
-                saveAs(blob, 'Orders.xlsx');
+                saveAs(blob, this.config.excelExportFileName + '.xlsx');
+            });
+        } else if (this.serverConfig.method === 'POST') {
+            this.http.post(this.serverConfig.excelExportUrl, { tableHeaders: this.headers }, { params, responseType: 'blob' }).subscribe(resp => {
+                dis.isLoading = false;
+                const blob = new Blob([resp], {type: 'application/vnd.ms-excel'} );
+                saveAs(blob, this.config.excelExportFileName + '.xlsx');
             });
         }
     }
