@@ -20,7 +20,7 @@ export class TreeTableRow {
     actions: TreeTableRowAction[] = [];
     // Is row selected
     selected: boolean = false;
-    options: {value: string, displayText: string}[] =  [];
+    options: { value: string, displayText: string }[] = [];
 
     defaultExpand = false;
 
@@ -241,13 +241,13 @@ export class TreeTableData {
         if (this.serverConfig.method === 'GET') {
             this.http.get(this.serverConfig.excelExportUrl, { params, responseType: 'blob' }).subscribe(resp => {
                 dis.isLoading = false;
-                const blob = new Blob([resp], {type: 'application/vnd.ms-excel'} );
+                const blob = new Blob([resp], { type: 'application/vnd.ms-excel' });
                 saveAs(blob, this.config.excelExportFileName + '.xlsx');
             });
         } else if (this.serverConfig.method === 'POST') {
             this.http.post(this.serverConfig.excelExportUrl, { tableHeaders: this.headers }, { params, responseType: 'blob' }).subscribe(resp => {
                 dis.isLoading = false;
-                const blob = new Blob([resp], {type: 'application/vnd.ms-excel'} );
+                const blob = new Blob([resp], { type: 'application/vnd.ms-excel' });
                 saveAs(blob, this.config.excelExportFileName + '.xlsx');
             });
         }
@@ -268,8 +268,14 @@ export class TreeTableData {
         const dis = this;
         dis.isLoading = true;
         dis.loadCounter++;
+        let req = undefined;
         if (this.serverConfig.method === 'GET') {
-            this.http.get(this.serverConfig.url, { params }).subscribe(resp => {
+            req = this.http.get(this.serverConfig.url, { params })
+        } else if (this.serverConfig.method === 'POST') {
+            req = this.http.post(this.serverConfig.url, { tableHeaders: this.headers }, { params })
+        }
+        if (req !== undefined) {
+            req.subscribe(resp => {
                 if (callback !== undefined && callback !== null) {
                     const rows = [];
                     if (resp[this.serverConfig.rowsKey] === undefined || resp[this.serverConfig.rowsKey] === null) {
@@ -321,6 +327,8 @@ export class TreeTableData {
                     dis.loadCounter = 0;
                 }
             });
+        } else {
+            console.warn('Invalid request method');
         }
     }
 
@@ -337,7 +345,7 @@ export class TreeTableData {
         this.splashMessageFlag = true;
         const dis = this;
         setTimeout(() => {
-            dis.splashMessageFlag  = false;
+            dis.splashMessageFlag = false;
         }, 2000);
     }
 }
