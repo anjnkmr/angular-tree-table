@@ -230,9 +230,15 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               dateFormat = 'DD-MMM-YYYY';
             }
             if (typeof rawDate === 'string') {
-              rawDate = moment(rawDate);
+              if (rawDate.trim() === '') {
+                result = '';
+              } else {
+                rawDate = moment(rawDate);
+                result = moment(rawDate).format(dateFormat);
+              }
+            } else {
+              result = moment(rawDate).format(dateFormat);
             }
-            result = moment(rawDate).format(dateFormat);
           } else {
             result = result[part];
           }
