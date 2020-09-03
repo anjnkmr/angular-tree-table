@@ -254,7 +254,6 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
             }
-            console.log('restul', partVal);
             result = new Number(partVal).toLocaleString(this.tableData.config.locale, currencyOptional);
           } else {
             result = result[part];
@@ -576,6 +575,18 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     return pageNumbers;
   }
 
+  private stripTags(data: string): string {
+    if (data === undefined || data === null) {
+      data = '';
+    }
+    data = data.replace('<br/>','\n\r');
+    data = data.replace('<br>','\n\r');
+    data = data.replace('<hr/>','\n\r');
+    data = data.replace('<hr>','\n\r');
+    data = data.replace(/<(.|\n)*?>/g, '');
+    return data;
+  }
+
   exportExcelLocal() {
     const dataRows = [];
     let dataRowsSource = this.tableData.data;
@@ -585,7 +596,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     for (let d of dataRowsSource) {
       const obj = {};
       for (let h of this.tableData.headers) {
-        obj[h.title] = d.data[h.dataProperty];
+        obj[h.title] = this.stripTags(d.data[h.dataProperty]);
       }
       dataRows.push(obj);
     }
