@@ -181,7 +181,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
    */
   getValueWithPathFromObject(path: string, data: any) {
     // $VA: Old Version support - which will automatically detect the data type
-    if (!path.startsWith('$SS:') && !path.startsWith('$VS:') && !path.startsWith('$VD:') && !path.startsWith('$VA:') && !path.startsWith('$VC:')) {
+    if (!path.startsWith('$SS:') && !path.startsWith('$VS:') && !path.startsWith('$VD:') && !path.startsWith('$VA:') && !path.startsWith('$VC:') && !path.startsWith('$VND:') && !path.startsWith('$VN:')) {
       path = '$VA:' + path;
     }
     if (path.startsWith('$SS:')) {
@@ -255,6 +255,41 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
               maximumFractionDigits: 2
             }
             result = new Number(partVal).toLocaleString(this.tableData.config.locale, currencyOptional);
+          } else {
+            result = result[part];
+          }
+        } else if (partVariableType === '$VND') {
+          if (pathParts.length - 1 === index) {
+            let rawAmount = result[part];
+            let decimalCount = parseInt(partParts[2]);
+            if (decimalCount === undefined || decimalCount === null || isNaN(decimalCount)) {
+              decimalCount = 2;
+            }
+            if (rawAmount === undefined) {
+              rawAmount = 0;
+            }
+            let currencyOptional = {
+              minimumFractionDigits: decimalCount,
+              maximumFractionDigits: decimalCount
+            }
+            result = new Number(rawAmount).toLocaleString(this.tableData.config.locale, currencyOptional);
+          } else {
+            result = result[part];
+          }
+        } else if (partVariableType === '$VN') {
+          if (pathParts.length - 1 === index) {
+            let actualAmount = result[part];
+            if (actualAmount === undefined || isNaN(actualAmount) || actualAmount === null) {
+              actualAmount = 0;
+            }
+            let currentAmount = parseInt(result[part]);
+            let originalAmount = actualAmount - currentAmount;
+            if (originalAmount > 0) {
+              actualAmount = parseFloat(actualAmount);
+            } else {
+              actualAmount = parseInt(actualAmount);
+            }
+            result = actualAmount
           } else {
             result = result[part];
           }
