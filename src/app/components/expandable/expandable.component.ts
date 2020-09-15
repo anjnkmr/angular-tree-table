@@ -32,7 +32,7 @@ export class ExpandableComponent implements OnInit {
     let data = [];
     this.tableData = new TreeTableData(this.tableConfig);
     this.populateHeaders();
-    this.http.get('http://168.62.213.4:80/message/pdsdata/versand_monitor').subscribe(resp => {
+    this.http.get('http://example.com/message/pdsdata/versand_monitor').subscribe(resp => {
       console.log('resp', resp);
       for (let level1Key in resp['messageResult']) {
         let rowData = resp['messageResult'][level1Key];
