@@ -14,16 +14,10 @@
         </select> Entries
       </div>
       <div class="second-part">
-        <input *ngIf="tableData.config.commonSearch" type="text"
-          class="form-control form-control-sm text-center col-3 float-right" [(ngModel)]="tableData.keyword"
-          (keyup)="search()" (change)="search()" placeholder="Search" />
-        <button *ngIf="tableData.config.excelExportButton"
-          class="btn btn-sm btn-primary export excelExportButton float-right"
-          (click)="excelExportClicked()">{{tableData.config.excelExportButtonText}}</button>
-        <div class="dropdown dropleft" id="dropDownVisCon{{randomInstance}}">
+        <div class="dropdown dropleft mr-2" id="dropDownVisCon{{randomInstance}}">
           <button id="dropDownVis{{randomInstance}}" *ngIf="tableData.config.columnVisibilityDropDown"
             class="btn btn-sm btn-secondary dropDownBtn v-elipses float-right dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">⋮</button>
+            aria-haspopup="true" aria-expanded="false" title="Show/ Hide Columns">⋮</button>
           <div class="dropDownBtn-data dropdown-menu">
 
             <ng-container *ngFor="let header of currentPageData.headers">
@@ -33,6 +27,12 @@
           </div>
 
         </div>
+        <input *ngIf="tableData.config.commonSearch" type="text"
+          class="form-control form-control-sm  mr-2 text-center col-3 float-right" [(ngModel)]="tableData.keyword"
+          (keyup)="search()" (change)="search()" placeholder="Search" title="Search Field"/>
+        <button *ngIf="tableData.config.excelExportButton"
+          class="btn btn-sm btn-primary  mr-2 export excelExportButton float-right" title="Export Table content to an excel file"
+          (click)="excelExportClicked()">{{tableData.config.excelExportButtonText}}</button>
       </div>
     </div>
     <div class="buttons-section" *ngIf="tableData.config.columnVisibility">
@@ -66,12 +66,11 @@
         </th>
         <ng-container *ngFor="let header of currentPageData.headers; let indx = index;">
           <th *ngIf="header.show && header.dataType !== 'SELECT'" [ngClass]="header.style" (click)="sortColumn(header)">
-            <ng-container *ngIf="tableData.config.showExpandAllArrows && tableData.config.expandableArrowPlacement.toString() === 'FIRST_COLUMN'">
-              <span class="collapsed-row-button"
-                *ngIf="indx === 0 && !tableData.isAllRowsExpanded"
+            <ng-container
+              *ngIf="tableData.config.showExpandAllArrows && tableData.config.expandableArrowPlacement.toString() === 'FIRST_COLUMN'">
+              <span class="collapsed-row-button" *ngIf="indx === 0 && !tableData.isAllRowsExpanded"
                 (click)="expandAllRows()"></span>
-              <span class="expanded-row-button"
-                *ngIf="indx === 0 && tableData.isAllRowsExpanded"
+              <span class="expanded-row-button" *ngIf="indx === 0 && tableData.isAllRowsExpanded"
                 (click)="collapseAllRows()"></span>
             </ng-container>
             {{header.title}}

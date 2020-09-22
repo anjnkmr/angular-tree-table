@@ -134,16 +134,17 @@
                 overflow: visible;
                 margin-top: 10px;
                 margin-bottom: 5px;
+                display: flex;
 
                 .first-part {
                     width: 40%;
                     text-align: left;
-                    display: inline-block;
                 }
 
                 .second-part {
                     width: 60%;
-                    display: inline-block;
+                    display: flex;
+                    justify-content: end;
                 }
             }
         }
