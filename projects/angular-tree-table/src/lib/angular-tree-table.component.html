@@ -27,12 +27,13 @@
           </div>
 
         </div>
-        <input *ngIf="tableData.config.commonSearch" type="text"
-          class="form-control form-control-sm  mr-2 text-center col-3 float-right" [(ngModel)]="tableData.keyword"
-          (keyup)="search()" (change)="search()" placeholder="Search" title="Search Field"/>
         <button *ngIf="tableData.config.excelExportButton"
           class="btn btn-sm btn-primary  mr-2 export excelExportButton float-right" title="Export Table content to an excel file"
           (click)="excelExportClicked()">{{tableData.config.excelExportButtonText}}</button>
+        <input *ngIf="tableData.config.commonSearch" type="text"
+          class="form-control form-control-sm  mr-2 text-center col-3 float-right" [(ngModel)]="tableData.keyword"
+          (keyup)="search()" (change)="search()" placeholder="Search" title="Search Field"/>
+        
       </div>
     </div>
     <div class="buttons-section" *ngIf="tableData.config.columnVisibility">
