@@ -55,8 +55,9 @@ export class TreeTableData {
 
     private http: HttpClient = null;
 
-    constructor(config?: TreeTableDataConfig, serverConfig?: TreeTableDataServerConfig, http?: HttpClient) {
+    constructor(config?: TreeTableDataConfig, serverConfig?: TreeTableDataServerConfig, http?: HttpClient, headers?: TreeTableHeaderObject[]) {
         this.http = http;
+        this.headers = headers ? headers : [];
         if (serverConfig !== undefined && serverConfig !== null) {
             if (serverConfig.paramNames === undefined || serverConfig.paramNames === null) {
                 serverConfig.paramNames = this.serverConfig.paramNames;
@@ -69,6 +70,7 @@ export class TreeTableData {
             }
             this.serverConfig = serverConfig;
             this.loadData();
+            // this.setPageData(0);
         } else {
             // console.log('No Server Properties');
         }
@@ -196,6 +198,10 @@ export class TreeTableData {
     totalPagesCount() {
         const pages = this.filteredRowsCount / this.pageSize;
         return Math.ceil(pages);
+    }
+
+    setPageData(pageNumber: number): void {
+        console.log('Placeholder SetPageData ', pageNumber);
     }
 
     getParams() {

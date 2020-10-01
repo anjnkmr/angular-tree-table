@@ -66,6 +66,10 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     this.tableData.allRowsExpanded = (): boolean => {
       return dis.currentPageData.data.length === dis.currentPageData.data.filter(v => v.expanded).length;
     };
+
+    this.tableData.setPageData = (pageNumber): void => {
+      this.setPageData(pageNumber);
+    }
   }
 
   dataChanged(changes: KeyValueChanges<string, any>) {
