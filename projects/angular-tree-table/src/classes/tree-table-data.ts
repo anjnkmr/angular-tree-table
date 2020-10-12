@@ -68,6 +68,9 @@ export class TreeTableData {
             if (serverConfig.rowUniqueKey === undefined || serverConfig.rowUniqueKey === null) {
                 serverConfig.rowUniqueKey = this.serverConfig.rowUniqueKey;
             }
+            if (serverConfig.apiResponseCallback === undefined || serverConfig.apiResponseCallback === null) {
+                serverConfig.apiResponseCallback = this.serverConfig.apiResponseCallback;
+            }
             this.serverConfig = serverConfig;
             this.loadData();
             // this.setPageData(0);
@@ -326,12 +329,16 @@ export class TreeTableData {
                         dis.loadCounter = 0;
                     }
                 }
+                if (this.serverConfig.apiResponseCallback !== undefined && this.serverConfig.apiResponseCallback !== null) {
+                    this.serverConfig.apiResponseCallback(resp);
+                }
             }, err => {
                 dis.loadCounter--;
                 if (dis.loadCounter <= 0) {
                     dis.isLoading = false;
                     dis.loadCounter = 0;
                 }
+                console.warn('Error in processing response', err);
             });
         } else {
             console.warn('Invalid request method');

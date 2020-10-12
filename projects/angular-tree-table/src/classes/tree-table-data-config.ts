@@ -270,7 +270,11 @@ export class TreeTableDataServerConfig {
      * 
      * Default value is `null`
      */
-    rowUniqueKey? = null
+    rowUniqueKey? = null;
+    /**
+     * Configure this callback function to get the raw response of the api call each time invoked
+     */
+    apiResponseCallback?: ((data: any) => void) = undefined;
 }
 
 export class TreeTableDataServerConfigParamMapping {
