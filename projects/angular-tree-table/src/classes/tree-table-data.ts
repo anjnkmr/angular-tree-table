@@ -330,7 +330,7 @@ export class TreeTableData {
                     }
                 }
                 if (this.serverConfig.apiResponseCallback !== undefined && this.serverConfig.apiResponseCallback !== null) {
-                    this.serverConfig.apiResponseCallback?.callback.bind(this.serverConfig.apiResponseCallback?.context, resp)();
+                    this.serverConfig.apiResponseCallback.callback.bind(this.serverConfig.apiResponseCallback.context, resp)();
                 }
             }, err => {
                 dis.loadCounter--;
