@@ -274,7 +274,7 @@ export class TreeTableDataServerConfig {
     /**
      * Configure this callback function to get the raw response of the api call each time invoked
      */
-    apiResponseCallback?: ((data: any) => void) = undefined;
+    apiResponseCallback?: { context: any, callback: ((data: any) => void) } = undefined;
 }
 
 export class TreeTableDataServerConfigParamMapping {

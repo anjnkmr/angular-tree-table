@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeTableHeaderObject, TreeTableRow, TreeTableData } from 'angular-tree-table';
+import { TreeTableHeaderObject, TreeTableRow, TreeTableData, TreeTableDataConfig } from 'angular-tree-table';
 
 @Component({
   selector: 'app-basic',
@@ -9,9 +9,10 @@ import { TreeTableHeaderObject, TreeTableRow, TreeTableData } from 'angular-tree
 export class BasicComponent implements OnInit {
 
   tableData: TreeTableData = null;
-  tableConfig = {
+  tableConfig: TreeTableDataConfig = {
     excelExportButton: true,
-    excelExportOnlyFilteredRows: true
+    excelExportOnlyFilteredRows: true,
+    visibleColumnFiltersVisibility: true
   };
   tableHeaders: TreeTableHeaderObject[] = [];
 
