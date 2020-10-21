@@ -219,7 +219,7 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
         if (part === ' ') {
           return ' ';
         }
-        if (result[part] === undefined) {
+        if (result[part] === undefined || result[part] === null) {
           if (partVariableType === '$VA') {
             return part;
           } else {
