@@ -21,7 +21,7 @@ export class InputsComponent implements OnInit {
   populateDummyData() {
     const data = [];
     for (let i = 0; i < 120; i++) {
-      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1}, false, null);
+      const row = new TreeTableRow(i + '', { sno: i+1, name: 'John '+(i+1), age: i+1, dob: '2020-09-23'}, false, null);
       row.options = [
         {
           displayText: 'Died',
@@ -47,8 +47,12 @@ export class InputsComponent implements OnInit {
     this.tableHeaders.push(new TreeTableHeaderObject('Sno', 'sno', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Name', 'name', null, true));
     const ageHeader = new TreeTableHeaderObject('Age', 'age', null, true);
-    ageHeader.dataType = TtDataType.INPUT_TEXT;
+    ageHeader.dataType = TtDataType.INPUT_NUMBER;
+    ageHeader.dataTypeArgs = {'step': '0.001'};
     this.tableHeaders.push(ageHeader);
+    const dob = new TreeTableHeaderObject('DOB', 'dob', null, true);
+    dob.dataType = TtDataType.INPUT_DATE;
+    this.tableHeaders.push(dob);
     const diedHeader = new TreeTableHeaderObject('Died', 'died', null, true);
     diedHeader.dataType = TtDataType.INPUT_SELECT;
     this.tableHeaders.push(diedHeader);

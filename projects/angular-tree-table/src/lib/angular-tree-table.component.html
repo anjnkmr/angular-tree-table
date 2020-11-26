@@ -155,6 +155,21 @@
                     [name]="indi + '_' + header.dataProperty"
                     (change)="inputRowTextChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)" />
                 </ng-container>
+                <ng-container *ngIf="header.dataType === 'INPUT_NUMBER'">
+                  <input type="number" class="header-input-text header-input-number tt-input-tag" [step]="header.dataTypeArgs['step'] ? header.dataTypeArgs['step'] : 'any'" [(ngModel)]="row.data[header.dataProperty]"
+                    [name]="indi + '_' + header.dataProperty"
+                    (change)="inputRowTextChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)" />
+                </ng-container>
+                <ng-container *ngIf="header.dataType === 'INPUT_DATE'">
+                  <input type="date" class="header-input-text header-input-date tt-input-tag" [(ngModel)]="row.data[header.dataProperty]"
+                    [name]="indi + '_' + header.dataProperty"
+                    (change)="inputRowTextChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)" />
+                </ng-container>
+                <ng-container *ngIf="header.dataType === 'INPUT_DATE_TIME'">
+                  <input type="datetime-local" class="header-input-text header-input-date-time tt-input-tag" [(ngModel)]="row.data[header.dataProperty]"
+                    [name]="indi + '_' + header.dataProperty"
+                    (change)="inputRowTextChangedInternal($event, row.data, header.dataProperty, row.data[header.dataProperty], tableData.config.level)" />
+                </ng-container>
                 <ng-container *ngIf="header.dataType === 'INPUT_SELECT'">
                   <select class="header-input-select tt-select-tag" [(ngModel)]="row.data[header.dataProperty]"
                     [name]="indi + '_' + header.dataProperty"
