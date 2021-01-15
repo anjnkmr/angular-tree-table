@@ -156,6 +156,9 @@ export class TreeTableData {
             if (config.commonSearch !== undefined && config.commonSearch !== null) {
                 this.config.commonSearch = config.commonSearch;
             }
+            if (config.searchEventType !== undefined && config.searchEventType !== null) {
+                this.config.searchEventType = config.searchEventType;
+            }
             if (config.columnFilters !== undefined && config.columnFilters !== null) {
                 this.config.columnFilters = config.columnFilters;
             }

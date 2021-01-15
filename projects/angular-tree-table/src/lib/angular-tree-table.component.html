@@ -32,7 +32,7 @@
           (click)="excelExportClicked()">{{tableData.config.excelExportButtonText}}</button>
         <input *ngIf="tableData.config.commonSearch" type="text"
           class="form-control form-control-sm  mr-2 text-center col-3 float-right" [(ngModel)]="tableData.keyword"
-          (keyup)="search()" (change)="search()" placeholder="Search" title="Search Field"/>
+          (keyup)="search('keyup')" (change)="search('change')" placeholder="Search" title="Search Field"/>
         
       </div>
     </div>
@@ -94,7 +94,7 @@
         <ng-container *ngFor="let header of currentPageData.headers">
           <th *ngIf="header.show">
             <input type="text" class="form-control form-control-sm text-center" placeholder="{{header.title}}"
-              (change)="columnSearchChanged(header.dataProperty)" (keyup)="columnSearchChanged(header.dataProperty)"
+              (change)="columnSearchChanged(header.dataProperty, 'change')" (keyup)="columnSearchChanged(header.dataProperty, 'keyup')"
               [(ngModel)]="tableData.config.visibleColumnFilters[header.dataProperty]"
               [disabled]="!header.enableColumnSearch || header.dataType === 'SELECT'"
               [name]="'filter_'+header.dataProperty" />

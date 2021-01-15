@@ -585,7 +585,10 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     console.warn('Data Schema need to be validated');
   }
 
-  columnSearchChanged(dataProperty: string) {
+  columnSearchChanged(dataProperty: string, eventType: string) {
+    if (eventType !== this.tableData.config.searchEventType && this.tableData.config.searchEventType !== 'both') {
+      return;
+    }
     this.setPageData(1);
   }
 
@@ -728,7 +731,10 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     this.setPageData(this.tableData.page);
   }
 
-  search() {
+  search(eventType: string) {
+    if (eventType !== this.tableData.config.searchEventType && this.tableData.config.searchEventType !== 'both') {
+      return;
+    }
     this.setPageData(1);
   }
 

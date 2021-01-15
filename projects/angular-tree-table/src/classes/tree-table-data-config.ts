@@ -139,6 +139,14 @@ export class TreeTableDataConfig {
      * Default value is `true`
      */
     commonSearch? = true;
+
+    /**
+     * This is used to configure the search box trigger event
+     * 
+     * Default value is `change`
+     * Possible values `change` | `keyup` | `both`
+     */
+    searchEventType?: string = 'change';
     /**
      * This is used to show/ hide Export Excel Button
      * 
