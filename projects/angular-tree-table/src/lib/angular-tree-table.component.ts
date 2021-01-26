@@ -619,6 +619,12 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     if (data === undefined || data === null) {
       data = '';
     }
+    if (typeof data === 'number') {
+      data = data + '';
+    }
+    if (typeof data === 'object') {
+      data = JSON.stringify(data);
+    }
     data = data.replace('<br/>','\n\r');
     data = data.replace('<br>','\n\r');
     data = data.replace('<hr/>','\n\r');
@@ -636,7 +642,9 @@ export class AngularTreeTableComponent implements OnInit, DoCheck {
     for (let d of dataRowsSource) {
       const obj = {};
       for (let h of this.tableData.headers) {
-        obj[h.title] = this.stripTags(d.data[h.dataProperty]);
+        if (h.show) {
+          obj[h.title] = this.stripTags(d.data[h.dataProperty]);
+        }
       }
       dataRows.push(obj);
     }

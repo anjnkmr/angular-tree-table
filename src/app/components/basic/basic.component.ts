@@ -12,7 +12,8 @@ export class BasicComponent implements OnInit {
   tableConfig: TreeTableDataConfig = {
     excelExportButton: true,
     excelExportOnlyFilteredRows: true,
-    visibleColumnFiltersVisibility: true
+    visibleColumnFiltersVisibility: true,
+    columnVisibilityDropDown: true
   };
   tableHeaders: TreeTableHeaderObject[] = [];
 
@@ -36,6 +37,27 @@ export class BasicComponent implements OnInit {
   populateHeaders() {
     this.tableHeaders.splice(0, this.tableHeaders.length);
     this.tableHeaders.push(new TreeTableHeaderObject('Sno', 'sno', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Created on |||$VD:dates.created:DD-MM HH-mm|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Joined', '$VD:dates.joined:MMM-YYYY', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VN', '$VN:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VND', '$VND:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary Currency', '$VC:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Created on |||$VD:dates.created:DD-MM HH-mm|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Joined', '$VD:dates.joined:MMM-YYYY', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VN', '$VN:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VND', '$VND:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary Currency', '$VC:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Created on |||$VD:dates.created:DD-MM HH-mm|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Joined', '$VD:dates.joined:MMM-YYYY', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VN', '$VN:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary VND', '$VND:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Salary Currency', '$VC:salary', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('Age', 'age', null, true));
+    this.tableHeaders.push(new TreeTableHeaderObject('D.no', 'address.dno', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('User Details', '=CONCAT($SS:Name: |||$VS:name|||<br/>|||Age: |||age * 2|||<br/> Created on |||$VD:dates.created:DD-MM HH-mm|||<br/> Joined on |||$VD:dates.joined:DD-MM HH-mm)', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Joined', '$VD:dates.joined:MMM-YYYY', null, true));
     this.tableHeaders.push(new TreeTableHeaderObject('Salary VN', '$VN:salary', null, true));
